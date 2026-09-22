@@ -215,17 +215,20 @@
     .photo-stack { height: 470px; position: relative; }
     .photo-card {
       position: absolute;
-      width: 64%;
-      aspect-ratio: .73;
-      padding: 10px 10px 38px;
+      margin: 0;
+      width: 47%;
+      aspect-ratio: .64;
+      padding: 9px 9px 34px;
       background: white;
       box-shadow: 0 20px 46px rgba(91,48,61,.2);
       opacity: 0;
       overflow: hidden;
     }
     .photo-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .photo-card.jessie { left: 0; top: 24px; transform: rotate(-7deg) translateY(22px); animation: photoJessie .9s .2s ease forwards; }
-    .photo-card.jonathan { right: 1%; top: 72px; transform: rotate(7deg) translateY(22px); animation: photoJonathan .9s .48s ease forwards; }
+    .photo-card.jessie { left: 1%; top: 24px; transform: rotate(-4deg) translateY(22px); animation: photoJessie .9s .2s ease forwards; }
+    .photo-card.jessie img { object-position: 50% 48%; }
+    .photo-card.jonathan { right: 1%; top: 64px; transform: rotate(4deg) translateY(22px); animation: photoJonathan .9s .48s ease forwards; }
+    .photo-card.jonathan img { object-position: 50% 38%; }
     .photo-card span {
       position: absolute;
       bottom: 11px;
@@ -284,9 +287,14 @@
       outline-offset: 3px;
     }
     .choice.selected { border-color: var(--rose-500); background: var(--rose-100); box-shadow: inset 0 0 0 1px var(--rose-500); }
+    .choice.turns-yes { animation: turnYes .58s cubic-bezier(.2,.8,.2,1); }
     .choice-icon { display: block; margin-bottom: 8px; font-size: 1.45rem; }
     .choice strong { display: block; font-size: .98rem; }
     .choice small { display: block; margin-top: 4px; color: var(--muted); font-size: .78rem; line-height: 1.35; }
+    .location-card { padding: 0; min-height: 178px; overflow: hidden; display: flex; flex-direction: column; }
+    .location-photo { width: 100%; height: 108px; object-fit: cover; display: block; }
+    .location-copy { display: block; padding: 12px 15px 13px; }
+    .location-copy strong, .location-copy small { display: block; }
 
     .text-input, .date-input {
       width: 100%;
@@ -308,17 +316,6 @@
       border-radius: 20px;
     }
     .field-label { display: block; font-size: .82rem; font-weight: 800; color: var(--rose-600); }
-    .time-row { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 13px; }
-    .time-chip {
-      min-height: 42px;
-      padding: 0 16px;
-      border: 1px solid var(--rose-200);
-      border-radius: 999px;
-      color: var(--ink);
-      background: white;
-      cursor: pointer;
-    }
-    .time-chip.selected { color: white; border-color: var(--rose-500); background: var(--rose-500); }
 
     .actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 32px; }
     .actions.right { justify-content: flex-end; }
@@ -384,12 +381,13 @@
     .dog-corner.big { width: 112px; }
 
     @keyframes panelIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes photoJessie { to { opacity: 1; transform: rotate(-7deg) translateY(0); } }
-    @keyframes photoJonathan { to { opacity: 1; transform: rotate(7deg) translateY(0); } }
+    @keyframes photoJessie { to { opacity: 1; transform: rotate(-4deg) translateY(0); } }
+    @keyframes photoJonathan { to { opacity: 1; transform: rotate(4deg) translateY(0); } }
     @keyframes float { 0%,100% { translate: 0 0; } 50% { translate: 0 -20px; rotate: 14deg; } }
     @keyframes heartFly { 0% { opacity: 1; transform: translate(0,0) scale(.6) rotate(0); } 100% { opacity: 0; transform: translate(var(--x), -150px) scale(1.35) rotate(28deg); } }
     @keyframes helloBounce { 0% { opacity: 0; transform: translateY(16px) rotate(-4deg) scale(.85); } 65% { transform: translateY(-5px) rotate(2deg) scale(1.04); } 100% { opacity: 1; transform: translateY(0) rotate(-2deg) scale(1); } }
     @keyframes dogWiggle { 0%,100% { transform: rotate(-2deg) translateY(0); } 50% { transform: rotate(2deg) translateY(-5px); } }
+    @keyframes turnYes { 0% { transform: scale(1); } 38% { transform: scale(.9) rotate(-2deg); } 72% { transform: scale(1.05) rotate(1deg); } 100% { transform: scale(1) rotate(0); } }
 
     @media (max-width: 900px) {
       .app-shell { width: min(760px, calc(100% - 24px)); display: block; padding: 18px 0; }
@@ -400,6 +398,16 @@
       .progress-track { height: 5px; border-radius: 5px; background: var(--rose-100); overflow: hidden; }
       .progress-fill { height: 100%; width: 12.5%; border-radius: inherit; background: var(--rose-500); transition: width .4s ease; }
       .panel { padding-top: 74px; }
+      .intro-grid { grid-template-columns: minmax(0, .8fr) minmax(300px, 1.2fr); gap: 26px; }
+    }
+
+    @media (max-width: 760px) {
+      .intro-grid { display: flex; flex-direction: column; gap: 18px; }
+      .intro-copy { width: min(560px, 100%); }
+      .photo-stack { width: min(520px, 100%); height: auto; margin: 0 auto; padding: 10px 4px 26px; display: flex; align-items: flex-start; gap: 24px; }
+      .photo-card { position: relative; inset: auto; width: calc(50% - 12px); flex: 0 0 calc(50% - 12px); }
+      .photo-card.jessie { left: auto; top: auto; transform: rotate(-2deg) translateY(22px); }
+      .photo-card.jonathan { right: auto; top: 18px; transform: rotate(2deg) translateY(22px); }
     }
 
     @media (max-width: 640px) {
@@ -408,12 +416,16 @@
       .panel { padding: 72px 22px 30px; }
       .intro-grid { display: flex; flex-direction: column; gap: 14px; }
       .photo-stack { width: 100%; height: 330px; }
-      .photo-card { width: 51%; padding: 7px 7px 29px; }
-      .photo-card.jessie { left: 8%; top: 9px; }
-      .photo-card.jonathan { right: 8%; top: 46px; }
+      .photo-card { width: calc(50% - 10px); flex-basis: calc(50% - 10px); padding: 7px 7px 29px; }
+      .photo-stack { gap: 20px; }
+      .photo-card.jessie { left: auto; top: auto; }
+      .photo-card.jonathan { right: auto; top: 14px; }
       h1 { font-size: clamp(2.75rem, 15vw, 4.5rem); }
       h2 { font-size: clamp(2.3rem, 11vw, 3.2rem); }
       .options-grid, .options-grid.four { grid-template-columns: 1fr; }
+      .location-card { min-height: 112px; flex-direction: row; }
+      .location-photo { width: 42%; height: 112px; flex: 0 0 42%; }
+      .location-copy { align-self: center; }
       .yes-no { grid-template-columns: repeat(2, 1fr); }
       .yes-no .choice { min-height: 125px; padding: 12px; }
       .recap { grid-template-columns: 1fr; }
@@ -441,7 +453,7 @@
         <li><span class="step-dot">2</span><span class="step-name">Your answer</span></li>
         <li><span class="step-dot">3</span><span class="step-name">Restaurant</span></li>
         <li><span class="step-dot">4</span><span class="step-name">Location</span></li>
-        <li><span class="step-dot">5</span><span class="step-name">Date & time</span></li>
+        <li><span class="step-dot">5</span><span class="step-name">Date</span></li>
         <li><span class="step-dot">6</span><span class="step-name">After dinner</span></li>
         <li><span class="step-dot">7</span><span class="step-name">Photobooth?</span></li>
         <li><span class="step-dot">8</span><span class="step-name">Our little plan</span></li>
@@ -460,9 +472,9 @@
             <div class="intro-copy">
               <img class="hello-dog" src="assets/dog-hello.png" alt="A very happy dog waving hello">
               <p class="panel-kicker">Dear Jessie,</p>
-              <h1>Will you go on a <span class="script">first date</span> with me?</h1>
-              <p class="lead">You were my first-ever Bumble match, and I’d really like to turn that lucky little swipe into a real memory—with you.</p>
-              <span class="tiny-note">♡ from Jonathan, with a little courage</span>
+              <h1>Will you go on a <span class="script"> meet up </span> with me?</h1>
+              <p class="lead">You were my first-ever Bumble match, and I’d really like to turn that lucky little swipe into a real memory—with you!</p>
+              <span class="tiny-note">♡ from Jonathan</span>
               <div class="actions right"><button class="primary next" type="button">Open the invitation →</button></div>
             </div>
             <div class="photo-stack" aria-label="Photos of Jessie and Jonathan">
@@ -477,10 +489,10 @@
           <div class="panel-inner">
             <p class="panel-kicker">First things first</p>
             <h2>Are you down <span class="script">for it?</span></h2>
-            <p class="lead">Zero pressure, promise. Pick the answer that feels right.</p>
+            <p class="lead">No pressure, promise. Pick the answer that feels right.</p>
             <div class="options-grid yes-no" data-field="answer">
               <button class="choice" type="button" data-value="Yes, let's go!" data-answer="yes"><span class="choice-icon">💗</span><strong>Yes!</strong><small>Let’s plan our date</small></button>
-              <button class="choice" type="button" data-value="Not yet" data-answer="no"><span class="choice-icon">🌷</span><strong>Not yet</strong><small>No pressure at all</small></button>
+              <button class="choice" id="notYetButton" type="button" data-value="Not yet" data-answer="no"><span class="choice-icon">🌷</span><strong>Not yet</strong><small>No pressure at all</small></button>
             </div>
             <p class="error" aria-live="assertive"></p>
             <div class="actions"><button class="secondary back" type="button">← Back</button><button class="primary next" type="button">Next →</button></div>
@@ -492,12 +504,12 @@
           <div class="panel-inner">
             <p class="panel-kicker">Pick your craving</p>
             <h2>Where should I <span class="script">take you?</span></h2>
-            <p class="lead">You choose the restaurant. I’ll pay for it, bro.</p>
+            <p class="lead">I will pay for it bro, relax</p>
             <div class="options-grid four" data-field="restaurant">
-              <button class="choice" type="button" data-value="Sushi date"><span class="choice-icon">🍣</span><strong>Sushi date</strong><small>Fresh bites & good conversation</small></button>
-              <button class="choice" type="button" data-value="Italian comfort"><span class="choice-icon">🍝</span><strong>Italian comfort</strong><small>Pasta, pizza, no regrets</small></button>
-              <button class="choice" type="button" data-value="Korean BBQ"><span class="choice-icon">🥩</span><strong>Korean BBQ</strong><small>We cook, we talk, we feast</small></button>
-              <button class="choice" type="button" data-value="Jessie's choice"><span class="choice-icon">✨</span><strong>Your secret pick</strong><small>Surprise me with your favorite</small></button>
+              <button class="choice" type="button" data-value="Sushi date"><span class="choice-icon">🍣</span><strong>Sushi</strong><small></small></button>
+              <button class="choice" type="button" data-value="Italian comfort"><span class="choice-icon">🥩</span><strong>Shabu-Shabu</strong><small></small></button>
+              <button class="choice" type="button" data-value="Korean BBQ"><span class="choice-icon">🥩</span><strong>Yakiniku</strong><small></small></button>
+              <button class="choice" type="button" data-value="Jessie's choice"><span class="choice-icon">✨</span><strong>Your secret pick</strong><small>ada saran lain?</small></button>
             </div>
             <input class="text-input" id="restaurantCustom" maxlength="60" placeholder="Or type the restaurant you want…" aria-label="Another restaurant">
             <p class="error" aria-live="assertive"></p>
@@ -508,14 +520,14 @@
         <section class="panel" data-step="3">
           <img class="dog-corner" src="assets/dog-roll.png" alt="">
           <div class="panel-inner">
-            <p class="panel-kicker">Choose our meeting spot</p>
+            <p class="panel-kicker">Choose our hangout spot</p>
             <h2>Where feels <span class="script">best?</span></h2>
-            <p class="lead">Somewhere easy, comfy, and not too far from your favorite dessert.</p>
+            <p class="lead">Somewhere easy, comfy, and not too far from you!.</p>
             <div class="options-grid four" data-field="location">
-              <button class="choice" type="button" data-value="Central Park"><span class="choice-icon">🌿</span><strong>Central Park</strong><small>CP</small></button>
-              <button class="choice" type="button" data-value="Pacific Place"><span class="choice-icon">🌸</span><strong>Pacific Place</strong><small>PP</small></button>
-              <button class="choice" type="button" data-value="Grand Indonesia"><span class="choice-icon">🏙️</span><strong>Grand Indonesia</strong><small>GI</small></button>
-              <button class="choice" type="button" data-value="PIK"><span class="choice-icon">🌊</span><strong>PIK</strong><small>A little farther, extra fun</small></button>
+              <button class="choice location-card" type="button" data-value="Central Park"><img class="location-photo" src="assets/location-cp.png" alt="Central Park mall exterior"><span class="location-copy"><strong>Central Park</strong><small>CP</small></span></button>
+              <button class="choice location-card" type="button" data-value="Grand Indonesia"><img class="location-photo" src="assets/location-gi.png" alt="Grand Indonesia mall exterior"><span class="location-copy"><strong>Grand Indonesia</strong><small>GI</small></span></button>
+              <button class="choice location-card" type="button" data-value="Lippo Mall Nusantara"><img class="location-photo" src="assets/location-lippo.png" alt="Lippo Mall Nusantara exterior"><span class="location-copy"><strong>Lippo Mall Nusantara</strong><small>LMN</small></span></button>
+              <button class="choice location-card" type="button" data-value="Pacific Place"><img class="location-photo" src="assets/location-pp.png" alt="Pacific Place and The Ritz-Carlton exterior"><span class="location-copy"><strong>Pacific Place</strong><small>PP</small></span></button>
             </div>
             <input class="text-input" id="locationCustom" maxlength="60" placeholder="Or name another place…" aria-label="Another location">
             <p class="error" aria-live="assertive"></p>
@@ -526,19 +538,12 @@
         <section class="panel" data-step="4">
           <img class="dog-corner left" src="assets/dog-laugh.png" alt="">
           <div class="panel-inner">
-            <p class="panel-kicker">Save us a moment</p>
+            <p class="panel-kicker">pilih tanggal ya</p>
             <h2>Which date works <span class="script">for you?</span></h2>
-            <p class="lead">Pick a day and the vibe. We can always adjust it together later.</p>
+            <p class="lead">Pick a day that works for you. We can always adjust it together later. (klo bisa di weekend hehe)</p>
             <div class="date-wrap">
               <label class="field-label" for="datePicker">The day</label>
               <input class="date-input" id="datePicker" type="date">
-              <span class="field-label" style="margin-top:18px">The time</span>
-              <div class="time-row" data-field="time">
-                <button class="time-chip" type="button" data-value="Lunch · 12:00">12:00</button>
-                <button class="time-chip" type="button" data-value="Late lunch · 15:00">15:00</button>
-                <button class="time-chip" type="button" data-value="Dinner · 18:00">18:00</button>
-                <button class="time-chip" type="button" data-value="Dinner · 19:30">19:30</button>
-              </div>
             </div>
             <p class="error" aria-live="assertive"></p>
             <div class="actions"><button class="secondary back" type="button">← Back</button><button class="primary next" type="button">Next →</button></div>
@@ -548,14 +553,13 @@
         <section class="panel" data-step="5">
           <img class="dog-corner" src="assets/dog-smile.png" alt="">
           <div class="panel-inner">
-            <p class="panel-kicker">Post-food agenda</p>
+            <p class="panel-kicker">Aktivitas setelah makan</p>
             <h2>What do we do when our stomachs are <span class="script">full?</span></h2>
-            <p class="lead">One little plan after dinner—or make up your own.</p>
+            <p class="lead">No Pressure sekali lagi!</p>
             <div class="options-grid four" data-field="activity">
               <button class="choice" type="button" data-value="Cinema"><span class="choice-icon">🎬</span><strong>Cinema</strong><small>A movie and shared popcorn</small></button>
               <button class="choice" type="button" data-value="Chill talk"><span class="choice-icon">☕</span><strong>Chill talk</strong><small>Coffee, a walk, no rush</small></button>
               <button class="choice" type="button" data-value="Dessert hunt"><span class="choice-icon">🍰</span><strong>Dessert hunt</strong><small>Because dinner has a second stomach</small></button>
-              <button class="choice" type="button" data-value="Arcade"><span class="choice-icon">🕹️</span><strong>Arcade</strong><small>Friendly competition?</small></button>
             </div>
             <input class="text-input" id="activityCustom" maxlength="60" placeholder="Or suggest something else…" aria-label="Another activity">
             <p class="error" aria-live="assertive"></p>
@@ -567,11 +571,11 @@
           <img class="dog-corner left" src="assets/dog-roll.png" alt="">
           <div class="panel-inner">
             <p class="panel-kicker">One last tiny question</p>
-            <h2>Do you want to do a <span class="script">photobooth?</span></h2>
+            <h2>Do you want to do a <span class="script">photobooth? (PLEASEE PLEASEE)</span></h2>
             <p class="lead">I’ll pay for it, bro. We deserve one slightly awkward, very cute souvenir.</p>
             <div class="options-grid yes-no" data-field="photobooth">
-              <button class="choice" type="button" data-value="Yes, photobooth! 💞"><span class="choice-icon">📸</span><strong>Absolutely</strong><small>Evidence that this happened</small></button>
-              <button class="choice" type="button" data-value="No photobooth"><span class="choice-icon">🙈</span><strong>Maybe next time</strong><small>We’ll keep the memories in our heads</small></button>
+              <button class="choice" type="button" data-value="Yes, photobooth! 💞"><span class="choice-icon">📸</span><strong>Absolutely</strong><small></small></button>
+              <button class="choice" type="button" data-value="No photobooth"><span class="choice-icon">🙈</span><strong>Maybe next time</strong><small></small></button>
             </div>
             <p class="error" aria-live="assertive"></p>
             <div class="actions"><button class="secondary back" type="button">← Back</button><button class="primary next" type="button">See our plan →</button></div>
@@ -581,9 +585,9 @@
         <section class="panel closing" data-step="7">
           <img class="dog-corner big" src="assets/dog-birds.png" alt="">
           <div class="panel-inner">
-            <p class="panel-kicker">It’s a date... hopefully ♡</p>
+            <p class="panel-kicker">Take screenshot on this page and send it to me bro, supaya i tau the plan ♡</p>
             <h2>Can’t wait to <span class="script">see you!</span></h2>
-            <p class="lead" style="margin-inline:auto">No pressure—I just want to know you better, Jess. Whatever you choose, thank you for opening my little invitation.</p>
+            <p class="lead" style="margin-inline:auto">No pressure ya, i just want to know u better, Jess. Whatever you choose, im open to it, thank you for opening my little invitation.</p>
             <div class="closing-collage" aria-hidden="true">
               <div class="mini-photo"><img src="assets/jessie1.jpeg" alt=""></div>
               <div class="mini-photo"><img src="assets/jonathan1.jpeg" alt=""></div>
@@ -601,8 +605,8 @@
     (() => {
       const panels = [...document.querySelectorAll('.panel')];
       const stepItems = [...document.querySelectorAll('.steps li')];
-      const labels = ['The invite', 'Your answer', 'Restaurant', 'Location', 'Date & time', 'After dinner', 'Photobooth?', 'Our little plan'];
-      const state = { answer: '', restaurant: '', location: '', date: '', time: '', activity: '', photobooth: '' };
+      const labels = ['The invite', 'Your answer', 'Restaurant', 'Location', 'Date', 'After dinner', 'Photobooth?', 'Our little plan'];
+      const state = { answer: '', restaurant: '', location: '', date: '', activity: '', photobooth: '' };
       let current = 0;
 
       const progressFill = document.getElementById('progressFill');
@@ -652,7 +656,7 @@
         if (current === 3 && !customValue('locationCustom', 'location')) { valid = false; message = 'Choose a meeting spot or type another place.'; }
         if (current === 4) {
           state.date = datePicker.value;
-          if (!state.date || !state.time) { valid = false; message = 'Choose both a date and a time that feel good.'; }
+          if (!state.date) { valid = false; message = 'Choose a date that feels good.'; }
         }
         if (current === 5 && !customValue('activityCustom', 'activity')) { valid = false; message = 'Choose an after-dinner plan or suggest your own.'; }
         if (current === 6 && !selectedValue('photobooth')) { valid = false; message = 'Photobooth or no photobooth?'; }
@@ -665,6 +669,14 @@
         group.querySelectorAll('[data-value]').forEach(button => {
           button.addEventListener('click', () => {
             group.querySelectorAll('[data-value]').forEach(item => item.classList.remove('selected'));
+            if (button.dataset.answer === 'no') {
+              button.classList.remove('turns-yes');
+              void button.offsetWidth;
+              button.classList.add('turns-yes');
+              button.dataset.answer = 'yes';
+              button.dataset.value = "Yes, let's go!";
+              button.innerHTML = '<span class="choice-icon">💗</span><strong>Yes!</strong><small>I knew you’d come around ♡</small>';
+            }
             button.classList.add('selected');
             state[field] = button.dataset.value;
             const error = button.closest('.panel')?.querySelector('.error');
@@ -693,6 +705,11 @@
         Object.keys(state).forEach(key => state[key] = '');
         document.querySelectorAll('.selected').forEach(item => item.classList.remove('selected'));
         document.querySelectorAll('input').forEach(input => input.value = '');
+        const notYet = document.getElementById('notYetButton');
+        notYet.classList.remove('turns-yes');
+        notYet.dataset.answer = 'no';
+        notYet.dataset.value = 'Not yet';
+        notYet.innerHTML = '<span class="choice-icon">🌷</span><strong>Not yet</strong><small>No pressure at all</small>';
         goTo(0);
       });
 
@@ -706,7 +723,7 @@
           ['Answer', state.answer || 'No pressure'],
           ['Restaurant', state.restaurant || 'Jessie’s choice'],
           ['Meet at', state.location || 'To be decided'],
-          ['When', `${formatDate(state.date)} · ${state.time || 'time TBD'}`],
+          ['When', formatDate(state.date)],
           ['Afterwards', state.activity || 'Go with the flow'],
           ['Photobooth', state.photobooth || 'We’ll see']
         ];
